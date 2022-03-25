@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "New",
+  "version": "0.1.0",
+  "description": "New Chrome Extension",
+  "chrome_url_overrides": {
+    "newtab": "new.html"
+  },
+  "permissions": ["storage"]
+}

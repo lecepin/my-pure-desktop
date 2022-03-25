@@ -1,0 +1,36 @@
+{
+  "name": "p-my-pure-desktop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cp-static": "cp -r public/* dist/",
+    "clear-dist": "rm -rf dist/*",
+    "before": "npm run clear-dist && npm run cp-static",
+    "start": "npm run before && parcel src/new.html --target webext-dev --no-hmr --public-url .",
+    "build": "npm run before && parcel build src/manifest.json --target webext-prod  --public-url ."
+  },
+  "targets": {
+    "webext-dev": {
+      "sourceMap": {
+        "inline": true,
+        "inlineSources": true
+      }
+    },
+    "webext-prod": {}
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-less": "2.4.0",
+    "parcel": "^2.4.0"
+  },
+  "dependencies": {
+    "@xstate/inspect": "^0.6.4",
+    "@xstate/react": "^2.0.1",
+    "dayjs": "^1.11.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "xstate": "^4.30.6"
+  }
+}
