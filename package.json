@@ -4,20 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cp-static": "cp -r public/* dist/",
+    "cp-static": "mkdir -p dist && cp -r public/* dist/",
     "clear-dist": "rm -rf dist/*",
     "before": "npm run clear-dist && npm run cp-static",
     "start": "npm run before && parcel src/new.html --target webext-dev --no-hmr --public-url .",
-    "build": "npm run before && parcel build src/manifest.json --target webext-prod  --public-url ."
+    "build": "npm run before && parcel build src/new.html --target webext-prod  --public-url ."
   },
   "targets": {
     "webext-dev": {
       "sourceMap": {
         "inline": true,
         "inlineSources": true
-      }
+      },
+      "distDir": "./dist"
     },
-    "webext-prod": {}
+    "webext-prod": {
+      "sourceMap": false,
+      "distDir": "./dist"
+    }
   },
   "author": "",
   "license": "ISC",
