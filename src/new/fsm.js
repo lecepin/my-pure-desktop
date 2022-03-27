@@ -8,24 +8,25 @@ export default createMachine(
       timeText: "",
       dateText: "",
       dayText: "",
-      bgList: [
-        "https://img.alicdn.com/imgextra/i4/O1CN01sF52FM1RpKFNt0knr_!!6000000002160-2-tps-2560-1440.png",
-        "https://img.alicdn.com/imgextra/i2/O1CN01kQBI8o1V0ix9rPpdx_!!6000000002591-2-tps-1955-1620.png",
-        "https://img.alicdn.com/imgextra/i4/O1CN016mkkGO1j15tPmnceV_!!6000000004487-2-tps-5282-2839.png",
-        "https://img.alicdn.com/imgextra/i3/O1CN016Y8e1b1P3ZiorFrlU_!!6000000001785-2-tps-2735-1632.png",
-        "https://img.alicdn.com/imgextra/i2/O1CN01bIBe34226ZKJWTS2S_!!6000000007071-2-tps-2048-2048.png",
-        "https://img.alicdn.com/imgextra/i4/O1CN01Xto4tu1zwNHSRDAe1_!!6000000006778-2-tps-1357-1357.png",
-        "https://img.alicdn.com/imgextra/i2/O1CN01HKk6c71ibRiCbC2ls_!!6000000004431-0-tps-5120-2604.jpg",
-        "https://img.alicdn.com/imgextra/i3/O1CN011iG9p920dsuErPoW3_!!6000000006873-0-tps-2400-1557.jpg",
-        "https://img.alicdn.com/imgextra/i4/O1CN01CbXhRb1hBy45JsZP9_!!6000000004240-0-tps-1849-1040.jpg",
-        "https://img.alicdn.com/imgextra/i3/O1CN01R2Rm961fzltxKsYEO_!!6000000004078-0-tps-3840-2160.jpg",
-        "https://img.alicdn.com/imgextra/i1/O1CN01CdFh4Y1nIjc1HtyXf_!!6000000005067-2-tps-2560-1440.png",
-        "https://img.alicdn.com/imgextra/i1/O1CN01IO9YpO23BR9TMMl9G_!!6000000007217-0-tps-6287-2600.jpg",
-      ],
+      bgList: [],
       currentBg: 0,
     },
-    initial: "空闲",
+    initial: "加载列表",
     states: {
+      加载列表: {
+        always: {
+          target: "空闲",
+          cond: "isTodayUpdated",
+          actions: "setBgList",
+        },
+        invoke: {
+          src: "getBgList",
+          onDone: {
+            actions: "setBgList",
+            target: "空闲",
+          },
+        },
+      },
       空闲: {
         entry: ["getStore", "getTime"],
         on: {
@@ -45,6 +46,26 @@ export default createMachine(
   },
   {
     actions: {
+      setBgList: actions.assign((ctx, e) => {
+        // from service
+        if (e.data) {
+          localStorage.setItem("getBgListTime", dayjs().format("YYYY-M-D"));
+          localStorage.setItem("bgList", JSON.stringify(e.data));
+
+          return {
+            bgList: e.data["image-src"],
+          };
+        }
+
+        // from always
+        try {
+          const bgList = JSON.parse(localStorage.getItem("bgList"));
+
+          return {
+            bgList: bgList["image-src"],
+          };
+        } catch (error) {}
+      }),
       getStore: actions.assign((ctx, e) => {
         return {
           currentBg: localStorage.getItem("currentBg") || 0,
@@ -78,6 +99,17 @@ export default createMachine(
       }),
     },
     services: {
+      getBgList: (ctx, e) => {
+        return fetch(
+          "https://cdn.jsdelivr.net/gh/lecepin/my-pure-desktop@master/public/bg-list.json"
+        )
+          .then((data) => data.json())
+          .catch(() =>
+            fetch(
+              "https://raw.githubusercontent.com/lecepin/my-pure-desktop/master/public/bg-list.json"
+            ).then((data) => data.json())
+          );
+      },
       updateTime:
         ({ timeText }, e) =>
         (send, onRec) => {
@@ -89,6 +121,13 @@ export default createMachine(
 
           return () => clearInterval(_interval);
         },
+    },
+    guards: {
+      isTodayUpdated: (ctx, e) => {
+        return (
+          localStorage.getItem("getBgListTime") == dayjs().format("YYYY-M-D")
+        );
+      },
     },
   }
 );

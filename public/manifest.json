@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "New",
+  "name": "My Pure Desktop",
   "version": "0.1.0",
-  "description": "New Chrome Extension",
+  "description": "纯净桌面",
   "chrome_url_overrides": {
     "newtab": "new.html"
-  },
-  "permissions": ["storage"]
+  }
 }

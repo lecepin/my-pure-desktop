@@ -22,7 +22,7 @@ export default () => {
     };
   }, []);
 
-  return (
+  return state.matches("空闲") ? (
     <div
       className="new"
       style={{
@@ -35,5 +35,5 @@ export default () => {
         <div className="new-time-day">Week {dayText}</div>
       </div>
     </div>
-  );
+  ) : null;
 };
