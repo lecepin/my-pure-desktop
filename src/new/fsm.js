@@ -101,7 +101,7 @@ export default createMachine(
     services: {
       getBgList: (ctx, e) => {
         return fetch(
-          "https://cdn.jsdelivr.net/gh/lecepin/my-pure-desktop@master/public/bg-list.json"
+          "https://cdn.jsdelivr.net/gh/lecepin/my-pure-desktop/public/bg-list.json"
         )
           .then((data) => data.json())
           .catch(() =>
