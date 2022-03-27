@@ -8,7 +8,8 @@
     "clear-dist": "rm -rf dist/*",
     "before": "npm run clear-dist && npm run cp-static",
     "start": "npm run before && parcel src/new.html --target webext-dev --no-hmr --public-url .",
-    "build": "npm run before && parcel build src/new.html --target webext-prod  --public-url ."
+    "build": "npm run before && parcel build src/new.html --target webext-prod  --public-url .",
+    "pub-page": "npm run build && gh-pages --dist dist"
   },
   "targets": {
     "webext-dev": {
@@ -27,6 +28,7 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-less": "2.4.0",
+    "gh-pages": "^3.2.3",
     "parcel": "^2.4.0"
   },
   "dependencies": {
