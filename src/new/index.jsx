@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { useMachine } from "@xstate/react";
+import Calendar from "react-calendar";
+import dayjs from "dayjs";
 import fsm from "./fsm";
 
+import "react-calendar/dist/Calendar.css";
 import "./index.less";
 
 export default () => {
   const [state, send] = useMachine(fsm);
   const {
-    context: { timeText, currentBg, bgList, dateText, dayText },
+    context: { timeText, currentBg, bgList, dateText, dayText, holidays },
   } = state;
 
   useEffect(() => {
@@ -34,6 +37,52 @@ export default () => {
         <div className="new-time-date">{dateText}</div>
         <div className="new-time-day">Week {dayText}</div>
       </div>
+
+      {state.matches("空闲.日期.显示") ? (
+        <Calendar
+          calendarType="US"
+          formatDay={(_, date) => {
+            const holiday = holidays?.[dayjs(date).format("YYYYMMDD")] || {};
+            const isNoWorkDay =
+              holiday?.workday === undefined
+                ? dayjs(date).day() == 0 || dayjs(date).day() == 6
+                  ? true
+                  : false
+                : holiday?.workday == "非工作日";
+            const isHolidayNoWorkDay = holiday?.holiday_recess == "假期节假日";
+            const content =
+              holiday?.holiday_today == "节日当天" ? holiday.holiday : "";
+
+            return (
+              <div
+                className={`new-cale-day ${
+                  isHolidayNoWorkDay ? "new-cale-day-holiday-no-work" : ""
+                }`}
+              >
+                <div
+                  className={`new-cale-day-title ${
+                    isNoWorkDay ? "new-cale-day-title-no-work" : ""
+                  }`}
+                >
+                  {dayjs(date).format("DD")}
+                </div>
+                <div className="new-cale-day-content">{content}</div>
+              </div>
+            );
+          }}
+          tileDisabled={() => true}
+          value={new Date()}
+        />
+      ) : null}
+      {!state.matches("空闲.日期.加载节假日") ? (
+        <div onClick={() => send("TOGGLE")} className="new-cale-open">
+          <div className="new-cale-open-symbol">
+            {state.matches("空闲.日期.显示") ? "«" : "»"}
+          </div>
+          <div>日</div>
+          <div>历</div>
+        </div>
+      ) : null}
     </div>
   ) : null;
 };

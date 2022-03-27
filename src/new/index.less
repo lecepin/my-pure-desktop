@@ -36,4 +36,107 @@
       font-size: 4vh;
     }
   }
+
+  .react-calendar {
+    background: none;
+    border-radius: 5px;
+    border-color: #fff;
+    box-shadow: 0 0 5px #000;
+    z-index: 1;
+    width: 450px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    margin-top: 1vh;
+    margin-left: 1vh;
+    display: inline-block;
+  }
+  .react-calendar button {
+    color: #fff;
+    text-shadow: 0 0 5px #000;
+    cursor: default;
+  }
+  .react-calendar__month-view__weekdays {
+    color: #fff;
+    text-shadow: 0 0 5px #000;
+  }
+  .react-calendar__tile {
+    padding: 0;
+  }
+  .react-calendar__tile--active,
+  .react-calendar__tile--hasActive {
+    background: unset;
+  }
+  .react-calendar__tile--now {
+  }
+  .react-calendar__month-view__days__day {
+  }
+  .react-calendar__tile:disabled {
+    background: none;
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: rgba(255, 255, 255, 0.5) !important;
+  }
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus,
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background: unset;
+  }
+  .react-calendar__navigation__label {
+    pointer-events: none;
+  }
+
+  .react-calendar__tile--active {
+    .new-cale-day {
+      border: 1px solid #fff;
+      text-shadow: 0 0 5px #000;
+      border-radius: 5px;
+    }
+  }
+  .new-cale-day {
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 5px;
+    margin: 5px 0 0 5px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &-holiday-no-work {
+      background-color: rgba(255, 0, 0, 0.2);
+    }
+
+    &-title {
+      font-size: 16px;
+
+      &-no-work {
+        color: red;
+        font-weight: bold;
+      }
+    }
+    &-content {
+      margin-top: 5px;
+      font-size: 12px;
+    }
+  }
+
+  .new-cale-open {
+    display: inline-block;
+    color: #fff;
+    text-shadow: 0 0 5px #000;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    width: 25px;
+    border: 1px solid #fff;
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+    margin-top: 20px;
+    padding-bottom: 5px;
+
+    &-symbol {
+      font-size: 20px;
+    }
+  }
 }
