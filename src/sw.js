@@ -1,12 +1,12 @@
 const IMAGE_CACHE_NAME = "pure-desktop-res";
 const BG_LIST_CACHE_NAME = "pure-desktop-bg-list";
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  clients.claim();
+self.addEventListener("activate", () => {
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {

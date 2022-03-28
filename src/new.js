@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import React from "react";
 import New from "./new/index";
 
 const app = document.getElementById("app");
