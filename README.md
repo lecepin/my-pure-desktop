@@ -1,5 +1,7 @@
 # 纯净浏览器桌面
 
+[chrome 扩展插件](https://chrome.google.com/webstore/detail/my-pure-desktop/bgbfnopkcbaoeceonocjpdemonldngpn)
+
 - 定期推送高质量干净壁纸
 - 支持含有节假日的日历
 - 按键盘 `←` `→` 进行桌面切换
