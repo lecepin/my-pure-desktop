@@ -10,3 +10,5 @@
 .parcel-cache
 
 npm-debug.log*
+
+yarn.lock

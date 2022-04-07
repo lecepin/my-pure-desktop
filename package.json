@@ -27,7 +27,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-less": "2.4.0",
     "eslint": "^8.11.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
